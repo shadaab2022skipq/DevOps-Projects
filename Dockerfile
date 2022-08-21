@@ -1,8 +1,11 @@
-FROM centos:latest
-MAINTAINER shadaabsikander@gmail.com
-RUN yum install -y httpd \
-  zip \
-  unzip
+FROM centos
+# MAINTAINER shadaabsikander@gmail.com
+# RUN cd /etc/yum.repos.d/
+RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
+RUN sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+# RUN yum update
+RUN yum install -y httpd
+RUN yum install -y zip unzip
 ADD https://www.free-css.com/assets/files/free-css-templates/download/page247/kindle.zip  /var/www/html/
 WORKDIR /var/www/html
 RUN unzip kindle.zip
